@@ -1,0 +1,17 @@
+
+@hostname = localhost
+@port = 5053
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@createdAt = {{$datetime iso8601}}
+@modifiedBy = {{$processEnv USERNAME}}
+
+###
+
+GET http://{{host}}/pokemons
+
+###
+GET http://{{host}}/pokemons/Ivysaur
+
+###
+GET http://{{host}}/pokemons/Charmander

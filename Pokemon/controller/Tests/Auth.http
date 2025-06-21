@@ -1,0 +1,40 @@
+
+
+@hostname = localhost
+@port = 5183
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@createdAt = {{$datetime iso8601}}
+@modifiedBy = {{$processEnv USERNAME}}
+
+###
+POST http://{{host}}/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "Test@123",
+  "email": "testuser@example.com"
+}
+
+###
+
+# @name login
+POST http://{{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+###
+@authToken = {{login.response.body.$.token}}
+# @name validateAuth
+GET http://{{host}}/api/auth/validate
+Authorization: Bearer {{authToken}}
+
+
+###
+GET http://{{host}}/api/Trainer
+Authorization: Bearer {{authToken}}
